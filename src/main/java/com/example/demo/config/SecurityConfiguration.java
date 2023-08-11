@@ -37,8 +37,8 @@ public class SecurityConfiguration {
 	 
 		UserDetails user =
 			 User.withDefaultPasswordEncoder()
-				.username("admin")
-				.password("1234")
+				.username("admin") //아이디 수정가능 (관리자 아이디)
+				.password("1234") //어려운 암호로 바꿔주세요.
 				.roles("ADMIN")
 				.build();
 		 
