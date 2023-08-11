@@ -2,6 +2,8 @@ package com.example.demo.firstinstance.controller.firstinstanceurl.domain.board;
 import lombok.RequiredArgsConstructor;
 import com.example.demo.domain.customer.Customer;
 import com.example.demo.domain.customer.CustomerService;
+import com.example.demo.domain.categorystr.CategoryStr;
+import com.example.demo.domain.categorystr.CategoryStrService;
 // import Service, Entity, ApiDtoForm.
 import com.example.demo.domain.board.Board;
 import com.example.demo.domain.board.BoardApiDto;
@@ -27,6 +29,7 @@ public class InstanceUrlBoardController {
 
     private final BoardService boardService;
     private final CustomerService customerService;
+    private final CategoryStrService categoryStrService;
 
     @GetMapping("/administer/instanceurl/board")
     public String index(Model model, BoardSearchCondition condition,
@@ -66,10 +69,19 @@ public class InstanceUrlBoardController {
 
         Board board = null;
         Customer customer = null;
+        CategoryStr categoryStr = null;
 
         if(userForm.getCustomerId()!=null) {
             try {
                   customer = customerService.findById(userForm.getCustomerId());
+            } catch (Exception e) {
+                return "redirect:/administer/instanceurl/board/insert";
+            }
+        }
+
+        if(userForm.getCategoryStrId()!=null) {
+            try {
+                  categoryStr = categoryStrService.findById(userForm.getCategoryStrId());
             } catch (Exception e) {
                 return "redirect:/administer/instanceurl/board/insert";
             }
@@ -82,8 +94,10 @@ public class InstanceUrlBoardController {
         DateTimeFormatter stdFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         board.setTitle(userForm.getTitle());
         board.setContent(userForm.getContent());
+        board.setIsOpen(userForm.getIsOpen());
         board.setIsDel(userForm.getIsDel());
             if(customer !=null){board.setCustomer(customer);}
+            if(categoryStr !=null){board.setCategoryStr(categoryStr);}
             board.setModifiedDate(LocalDateTime.now());
             board.setCreatedDate(LocalDateTime.now());
             board.setIsDel("N");
@@ -137,9 +151,13 @@ public class InstanceUrlBoardController {
         userForm.setId(board.getId());
         userForm.setTitle(board.getTitle());
         userForm.setContent(board.getContent());
+        userForm.setIsOpen(board.getIsOpen());
         userForm.setIsDel(board.getIsDel());
         if(board.getCustomer()!=null) {
             userForm.setCustomerId(board.getCustomer().getId());
+        }
+        if(board.getCategoryStr()!=null) {
+            userForm.setCategoryStrId(board.getCategoryStr().getId());
         }
 
         userForm.setCreatedDate(board.getCreatedDate());
@@ -157,6 +175,7 @@ public class InstanceUrlBoardController {
 
         Board board = null;
         Customer customer = null;
+        CategoryStr categoryStr = null;
         try{
             board = boardService.findById(id);
         }catch(Exception e){
@@ -171,10 +190,19 @@ public class InstanceUrlBoardController {
                 return "redirect:/administer/instanceurl/board/insert";
             }
         }
+        if(userForm.getCategoryStrId()!=null){
+            try{
+                categoryStr = categoryStrService.findById(userForm.getCategoryStrId());
+                board.setCategoryStr(categoryStr);
+            }catch(Exception e){
+                return "redirect:/administer/instanceurl/board/insert";
+            }
+        }
         try{
         DateTimeFormatter stdFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         board.setTitle(userForm.getTitle());
         board.setContent(userForm.getContent());
+        board.setIsOpen(userForm.getIsOpen());
         board.setIsDel(userForm.getIsDel());
         board.setModifiedDate(LocalDateTime.now());
 

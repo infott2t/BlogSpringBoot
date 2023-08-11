@@ -10,6 +10,7 @@ public class InstanceUrlController {
     public String index(){
         //firstInstance index의 처음 위치.
         return "firstinstance/index";
+         
     }
      
 	@GetMapping("/login")

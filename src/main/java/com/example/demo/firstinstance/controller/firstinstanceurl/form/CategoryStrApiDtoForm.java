@@ -5,16 +5,13 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class BoardApiDtoForm {
+public class CategoryStrApiDtoForm {
 
     private Long id;
-    private String title;
-    private String content;
-    private String isOpen;
+    private String name;
+    private Long refId;
 
     private String isDel;
     private LocalDateTime modifiedDate;
     private LocalDateTime createdDate;
-    private Long customerId;
-    private Long categoryStrId;
 }

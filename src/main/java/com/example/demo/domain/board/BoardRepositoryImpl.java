@@ -14,6 +14,7 @@ import java.util.List;
 
 import static com.example.demo.domain.board.QBoard.board;
 import static com.example.demo.domain.customer.QCustomer.customer;
+import static com.example.demo.domain.categorystr.QCategoryStr.categoryStr;
 import static org.springframework.util.StringUtils.hasText;
 
 
@@ -35,11 +36,14 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                         board.id,
                         board.title,
                         board.content,
+                        board.isOpen,
                         board.isDel,
                         board.modifiedDate,
                         board.createdDate,
-                        board.customer              )).from(board)
+                        board.customer,
+                        board.categoryStr              )).from(board)
                         .leftJoin(board.customer, customer)
+                        .leftJoin(board.categoryStr, categoryStr)
                 .where(
                         searchAllV3Predicate(condition2)
                 ).where(board.isDel.eq("N"))
@@ -64,10 +68,12 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                         .and(condId(condition2.getId()))
                         .and(condTitle(condition2.getTitle()))
                         .and(condContent(condition2.getContent()))
+                        .and(condIsOpen(condition2.getIsOpen()))
                         .and(condIsDel(condition2.getIsDel()))
                         .and(condModifiedDate(condition2.getModifiedDate()))
                         .and(condCreatedDate(condition2.getCreatedDate()))
                         .and(condCustomerId(condition2.getCustomerId()))
+                        .and(condCategoryStrId(condition2.getCategoryStrId()))
                 .and(condS2(condition2.getField(), condition2.getS()))
                 .and(condSdate2(condition2.getSdate()))
                 .and(condEdate2(condition2.getEdate()));
@@ -96,6 +102,14 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
         BooleanBuilder builder = new BooleanBuilder();
         if(hasText(content)){
             builder.or(board.content.eq(content));
+        }
+        return builder;
+    }
+
+    private Predicate condIsOpen(String isOpen) {
+        BooleanBuilder builder = new BooleanBuilder();
+        if(hasText(isOpen)){
+            builder.or(board.isOpen.eq(isOpen));
         }
         return builder;
     }
@@ -132,6 +146,14 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
         return builder;
     }
 
+    private Predicate condCategoryStrId (String categoryStrId) {
+        BooleanBuilder builder = new BooleanBuilder();
+        if(hasText(categoryStrId)){
+            builder.or(board.categoryStr.id.eq(Long.valueOf(categoryStrId)));
+        }
+        return builder;
+    }
+
 
     private Predicate condS2(String field, String s) {
         BooleanBuilder builder = new BooleanBuilder();
@@ -146,6 +168,9 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             if(field.equals("content")){
                 builder.or(board.content.like("%"+s+"%"));
             }
+            if(field.equals("isOpen")){
+                builder.or(board.isOpen.like("%"+s+"%"));
+            }
             if(field.equals("isDel")){
                 builder.or(board.isDel.like("%"+s+"%"));
             }
@@ -157,6 +182,9 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             }
             if(field.equals("customerId")){
                 builder.or(board.customer.id.eq(Long.valueOf(s)));
+            }
+            if(field.equals("categoryStrId")){
+                builder.or(board.categoryStr.id.eq(Long.valueOf(s)));
             }
         }
         return builder;
@@ -197,11 +225,14 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                         board.id,
                         board.title,
                         board.content,
+                        board.isOpen,
                         board.isDel,
                         board.modifiedDate,
                         board.createdDate,
-                        board.customer              )).from(board)
+                        board.customer,
+                        board.categoryStr              )).from(board)
                         .leftJoin(board.customer, customer)
+                        .leftJoin(board.categoryStr, categoryStr)
                 .where(
                         searchAllV2Predicate(condition)
                 ).where(board.isDel.eq("N"))
@@ -246,6 +277,9 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             if(field.equals("content")){
                 builder.or(board.content.like("%"+s+"%"));
             }
+            if(field.equals("isOpen")){
+                builder.or(board.isOpen.like("%"+s+"%"));
+            }
             if(field.equals("isDel")){
                 builder.or(board.isDel.like("%"+s+"%"));
             }
@@ -257,6 +291,9 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             }
             if(field.equals("customerId")){
                 builder.or(board.customer.id.eq(Long.valueOf(s)));
+            }
+            if(field.equals("categoryStrId")){
+                builder.or(board.categoryStr.id.eq(Long.valueOf(s)));
             }
         }
         return builder;
@@ -298,11 +335,14 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                         board.id,
                         board.title,
                         board.content,
+                        board.isOpen,
                         board.isDel,
                         board.modifiedDate,
                         board.createdDate,
-                        board.customer              )).from(board).where(board.isDel.eq("N"))
+                        board.customer,
+                        board.categoryStr              )).from(board).where(board.isDel.eq("N"))
                         .leftJoin(board.customer, customer)
+                        .leftJoin(board.categoryStr, categoryStr)
                 .orderBy(board.id.asc())
                 .fetch();
 

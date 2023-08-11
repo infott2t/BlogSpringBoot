@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -48,10 +48,12 @@
                         <option th:value="id" th:selected="${#strings.trim(param.field) eq 'id'}">id</option>
                         <option th:value="title" th:selected="${#strings.trim(param.field) eq 'title'}">title</option>
                         <option th:value="content" th:selected="${#strings.trim(param.field) eq 'content'}">content</option>
+                        <option th:value="isOpen" th:selected="${#strings.trim(param.field) eq 'isOpen'}">isOpen</option>
                         <option th:value="isDel" th:selected="${#strings.trim(param.field) eq 'isDel'}">isDel</option>
                         <option th:value="modifiedDate" th:selected="${#strings.trim(param.field) eq 'modifiedDate'}">modifiedDate</option>
                         <option th:value="createdDate" th:selected="${#strings.trim(param.field) eq 'createdDate'}">createdDate</option>
                         <option th:value="customerId" th:selected="${#strings.trim(param.field) eq 'customerId'}">customerId</option>
+                        <option th:value="categoryStrId" th:selected="${#strings.trim(param.field) eq 'categoryStrId'}">categoryStrId</option>
                     </select>
                     &nbsp;
                     <input class="font-12" style="width:110px;" type="text" title="키워드" placeholder="키워드명 입력" name="s" th:field="*{s}" autocomplete="on" >
@@ -83,7 +85,9 @@
             <th>id</th>
             <th>title</th>
             <th>content</th>
+            <th>isOpen</th>
             <th>customer_id</th>
+            <th>category_str_id</th>
             <th>삭제여부</th>
             <th>수정일</th>
             <th>생성일</th>
@@ -96,7 +100,9 @@
             <td th:text="${board.id}"></td>
             <td th:text="${board.title}"></td>
             <td th:text="${board.content}"></td>
+            <td th:text="${board.isOpen}"></td>
             <td th:text="${board.customer?.id}"></td>
+            <td th:text="${board.categoryStr?.id}"></td>
             <td th:text="${board.isDel}"></td>
             <td th:text="${ #temporals.format(board.modifiedDate, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${ #temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></td>

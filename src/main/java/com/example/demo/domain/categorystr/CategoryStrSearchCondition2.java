@@ -1,20 +1,17 @@
-package com.example.demo.domain.board;
+package com.example.demo.domain.categorystr;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class BoardSearchCondition2 {
+public class CategoryStrSearchCondition2 {
 
     private String id;
-    private String title;
-    private String content;
-    private String isOpen;
+    private String name;
+    private String refId;
     private String isDel;
     private String modifiedDate;
     private String createdDate;
-    private String customerId;
-    private String categoryStrId;
    private String field;
    private String s;
    private String sdate;
