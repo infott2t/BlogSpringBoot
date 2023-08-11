@@ -64,6 +64,42 @@ public class InstanceUrlBoardController {
         return "firstinstance/board/insert";
     }
 
+    @GetMapping("/administer/instanceurl/boardBlogWrite")
+    public String insert2(Model model, BoardSearchCondition condition,
+                         @RequestParam(value="page", required=false) Integer page,
+                         @PageableDefault(size= 10)Pageable pageable) throws Exception{
+
+        Page<BoardApiDto> boards = boardService.searchAllV2(condition, pageable);
+
+
+        model.addAttribute("boards", boards);
+        model.addAttribute("condition", condition);
+        model.addAttribute("page", pageable.getPageNumber()+1); // 0부터 시작, +1이 필요.
+
+        BoardApiDtoForm userForm = new BoardApiDtoForm();
+        model.addAttribute("userForm",userForm);
+
+        return "firstinstance/board/blogInsert";
+    }
+
+    @GetMapping("/administer/instanceurl/boardBlogWriteDesign")
+    public String insert3(Model model, BoardSearchCondition condition,
+                         @RequestParam(value="page", required=false) Integer page,
+                         @PageableDefault(size= 10)Pageable pageable) throws Exception{
+
+        Page<BoardApiDto> boards = boardService.searchAllV2(condition, pageable);
+
+
+        model.addAttribute("boards", boards);
+        model.addAttribute("condition", condition);
+        model.addAttribute("page", pageable.getPageNumber()+1); // 0부터 시작, +1이 필요.
+
+        BoardApiDtoForm userForm = new BoardApiDtoForm();
+        model.addAttribute("userForm",userForm);
+
+        return "firstinstance/board/blogInsertDesign";
+    }
+
     @PostMapping("/administer/instanceurl/board/insert_2")
     public String insert_2(Model model, BoardApiDtoForm userForm){
 

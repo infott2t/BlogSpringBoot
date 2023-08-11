@@ -19,7 +19,12 @@
         .logo{
             color: black;
         }
-    </style>
+        .font-12{
+            font-size: 12px;
+        }
+        ul>li{
+            font-size:12px;
+        }    </style>
 
 </head>
 
@@ -27,19 +32,57 @@
 <div class="container">
 
     <br/>
-    <h2>Entity Data CRUD First Instance</h2>
-    <br />
-    <br/> 
-    <p>Move table, <a th:href="@{/administer/instanceurl/customer}">Customer</a></p>
-    <p>Move table, <a th:href="@{/administer/instanceurl/categoryStr}">CategoryStr</a></p>
-    <p>Move table, <a th:href="@{/administer/instanceurl/board}">Board</a>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a th:href="@{/administer/instanceurl/boardBlogWrite}">글쓰기</a>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a th:href="@{/administer/instanceurl/boardBlogWriteDesign}">글쓰기 디자인 변경</a></p>
+    <div style="padding-bottom:5px;" class="d-flex align-items-center">
+        <a class="btn btn-sm btn-link" style="padding-top:9px;" th:href="@{/administer/instanceurl}"><i class="bi bi-chevron-double-left fa-3x"></i></a><a th:href="@{/administer/instanceurl/board}">
+        <span style="font-size:25px;" >Board 테이블</span></a>
+    </div>
+    <br/>
+    
+    <br/>
 
-<!-- Add, link...-->
-    <!-- <p>Move talbe, <a th:href="@{/administer/instanceurl/[domain]}">[domain]</a></p> -->
-<br/> 
-<br/>
+    <table class="table table-sm" style="font-size: 12px;">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>content</th>
+            <th>isOpen</th>
+            <th>customer_id</th>
+            <th>category_str_id</th>
+          <th>삭제여부</th>
+            <th>수정일</th>
+            <th>생성일</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        <form  th:action="@{/administer/instanceurl/board/insert_2}" th:object="${userForm}" method="post" >
+
+            <tr>
+                <td><input type="text" th:field="*{id}" style="width:50px;" readonly/></td>
+                <td><input type="text" th:field="*{title}" /></td>
+                <td><input type="text" th:field="*{content}" /></td>
+                <td><input type="text" th:field="*{isOpen}" /></td>
+                <td><input type="text" th:field="${userForm.customerId}" style="width:50px;" /></td>
+                <td><input type="text" th:field="${userForm.categoryStrId}" style="width:50px;" /></td>
+                <td><input type="text" style="width:30px;" th:field="*{isDel}" th:value="N" readOnly  /></td>
+                <td th:text="${#temporals.format(userForm.modifiedDate, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${#temporals.format(userForm.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+
+                <td><button type="submit" class="btn btn-sm btn-primary font-12">입력</button></td>
+                <td><a class="btn btn-sm btn-danger font-12" th:href="@{/administer/instanceurl/board/}">취소</a></td>
+            </tr>
+        </form>
+
+         
+        </tbody>
+    </table>
+    
+<br/><br/>
+
 
 </div>
 <br />
@@ -74,7 +117,7 @@
   -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
 <script>
-<!--JQuery-->
+    <!--JQuery-->
 
 </script>
 </body>
