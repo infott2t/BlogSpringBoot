@@ -3,13 +3,11 @@ package com.example.demo.config;
 import java.util.List;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
+ 
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+ 
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
@@ -23,12 +21,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:///C:/summernote_image/");
     }
 
-        @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-                .create();
-        GsonHttpMessageConverter gsonConverter = new GsonHttpMessageConverter(gson);
-        converters.add(gsonConverter);
-    }
+ 
 }
