@@ -3,6 +3,7 @@ import lombok.RequiredArgsConstructor;
 import com.example.demo.domain.customer.Customer;
 import com.example.demo.domain.customer.CustomerService;
 import com.example.demo.domain.categorystr.CategoryStr;
+import com.example.demo.domain.categorystr.CategoryStrApiDto;
 import com.example.demo.domain.categorystr.CategoryStrService;
 // import Service, Entity, ApiDtoForm.
 import com.example.demo.domain.board.Board;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.time.format.DateTimeFormatter;
-
+import java.util.List;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
@@ -88,8 +89,9 @@ public class InstanceUrlBoardController {
                          @PageableDefault(size= 10)Pageable pageable) throws Exception{
 
         Page<BoardApiDto> boards = boardService.searchAllV2(condition, pageable);
+        List<CategoryStrApiDto> catogory = categoryStrService.searchFindAllDesc();                        
 
-
+        model.addAttribute("category", catogory);
         model.addAttribute("boards", boards);
         model.addAttribute("condition", condition);
         model.addAttribute("page", pageable.getPageNumber()+1); // 0부터 시작, +1이 필요.
@@ -98,6 +100,24 @@ public class InstanceUrlBoardController {
         model.addAttribute("userForm",userForm);
 
         return "firstinstance/board/blogInsertDesign";
+    }
+     @GetMapping("/administer/instanceurl/boardBlogWriteDesignSummer")
+    public String insert4(Model model, BoardSearchCondition condition,
+                         @RequestParam(value="page", required=false) Integer page,
+                         @PageableDefault(size= 10)Pageable pageable) throws Exception{
+
+        Page<BoardApiDto> boards = boardService.searchAllV2(condition, pageable);
+        List<CategoryStrApiDto> catogory = categoryStrService.searchFindAllDesc();                        
+
+        model.addAttribute("category", catogory);
+        model.addAttribute("boards", boards);
+        model.addAttribute("condition", condition);
+        model.addAttribute("page", pageable.getPageNumber()+1); // 0부터 시작, +1이 필요.
+
+        BoardApiDtoForm userForm = new BoardApiDtoForm();
+        model.addAttribute("userForm",userForm);
+
+        return "firstinstance/board/blogInsertDesignSummer";
     }
 
     @PostMapping("/administer/instanceurl/board/insert_2")

@@ -1,10 +1,12 @@
 package com.example.demo.firstinstance.controller.firstinstanceurl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class InstanceUrlController {
 
+     
     
     @GetMapping("/admin")  //url이 /admin인 경우, 관리자 페이지로 이동.
     public String index(){

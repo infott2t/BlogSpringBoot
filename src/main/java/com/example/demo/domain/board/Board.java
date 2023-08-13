@@ -23,6 +23,7 @@ public class Board {
     private Long id;
 
     private String title;
+    @Column(length=10000)
     private String content;
     private String isOpen;
     private String isDel;
